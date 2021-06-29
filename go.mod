@@ -1,4 +1,4 @@
-module gingonic
+module github.com/guravamey/gingonic
 
 go 1.16
 

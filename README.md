@@ -7,9 +7,7 @@ Run following commands :
 
 git clone git@github.com:guravamey/gingonic.git
 
-go get -u github.com/gin-gonic/gin
-
-go get github.com/google/uuid
+go mod download
 
 For Server startup : 
 go run server.go

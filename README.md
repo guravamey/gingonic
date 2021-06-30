@@ -1,15 +1,26 @@
 # gingonic
-POC for GinGonic
+POC for GO - GinGonic
 
-Prequisite : 
+Project setup : 
+
+Run following commands : 
+
+git clone git@github.com:guravamey/gingonic.git
 
 go get -u github.com/gin-gonic/gin
 
-
 go get github.com/google/uuid
 
+For Server startup : 
+go run server.go
 
-Local host 5000, get,put, post and delete. ID as path param for put and delete. 
-POST and PUT requires body. Body contains Name and Age
 
+Local host 5000 - GET, POST, PUT and DELETE. ID as path param for PUT and DELETE. 
+POST and PUT requires body. Body has name and age as JSON parameters. 
 
+Example : 
+
+curl --location --request POST 'localhost:5000/users/' \
+--header 'Content-Type: application/json' \
+--data-raw '{"name" : "Amey",
+"age": 28}'

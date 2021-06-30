@@ -22,3 +22,8 @@ curl --location --request POST 'localhost:5000/users/' \
 --header 'Content-Type: application/json' \
 --data-raw '{"name" : "Amey",
 "age": 28}'
+
+Added following middleware : 
+- Log Formatter : Formats the log in the console, log files
+- Basic Auth : Protects the endpoints with basic username and password. Username : gin, Password: gonic
+- Writing logs in gin.log

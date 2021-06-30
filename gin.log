@@ -1,0 +1,21 @@
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /users/                   --> main.main.func1 (4 handlers)
+[GIN-debug] POST   /users/                   --> main.main.func2 (4 handlers)
+[GIN-debug] PUT    /users/:id                --> main.main.func3 (4 handlers)
+[GIN-debug] DELETE /users/:id                --> main.main.func4 (4 handlers)
+[GIN-debug] Listening and serving HTTP on :5000
+::1 - [30 Jun 21 12:55 CEST] GET /users/ 200 177.533µs 
+::1 - [30 Jun 21 12:55 CEST] GET /users/ 200 10.402µs 
+::1 - [30 Jun 21 12:55 CEST] GET /users/ 200 8.533µs 
+::1 - [30 Jun 21 12:55 CEST] GET /users/ 200 9.187µs 
+::1 - [30 Jun 21 12:55 CEST] GET /users/ 200 9.259µs 
+::1 - [30 Jun 21 12:55 CEST] GET /users/ 200 9.024µs 
+::1 - [30 Jun 21 12:55 CEST] POST /users/ 400 341.234µs 
+::1 - [30 Jun 21 12:55 CEST] POST /users/ 400 103.584µs 
+::1 - [30 Jun 21 12:56 CEST] POST /users/ 200 40.466µs 
+::1 - [30 Jun 21 12:56 CEST] GET /users/ 200 21.582µs 
+::1 - [30 Jun 21 12:56 CEST] POST /users/ 200 45.379µs 
+::1 - [30 Jun 21 12:56 CEST] POST /users/ 400 88.29µs 

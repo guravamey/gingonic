@@ -9,8 +9,8 @@ import (
 
 type UserController interface {
 	FindAll() []entity.User
-	Save(ctx *gin.Context) entity.User
-	Update(id string, ctx *gin.Context) entity.User
+	Save(ctx *gin.Context) (entity.User, error)
+	Update(id string, ctx *gin.Context) (entity.User, error)
 	Delete(id string)
 }
 
@@ -26,23 +26,21 @@ func (c controller) FindAll() []entity.User {
 	return c.services.FindAll()
 }
 
-func (c controller) Save(ctx *gin.Context) entity.User {
+func (c controller) Save(ctx *gin.Context) (entity.User, error) {
 	var userDetail entity.User
 	userDetail.ID = uuid.New().String()
 	if err := ctx.ShouldBindJSON(&userDetail); err != nil {
-		ctx.JSON(422, gin.H{"error": true, "message": "Invalid Request Body"})
-		return entity.User{}
+		return entity.User{}, err
 	}
-	return c.services.Save(userDetail)
+	return c.services.Save(userDetail), nil
 }
 
-func (c controller) Update(id string, ctx *gin.Context) entity.User {
+func (c controller) Update(id string, ctx *gin.Context) (entity.User, error) {
 	var userDetail entity.User
 	if err := ctx.ShouldBindJSON(&userDetail); err != nil {
-		ctx.JSON(422, gin.H{"error": true, "message": "Invalid Request Body"})
-		return entity.User{}
+		return entity.User{}, err
 	}
-	return c.services.Update(id, userDetail)
+	return c.services.Update(id, userDetail), nil
 }
 
 func (c controller) Delete(id string) {

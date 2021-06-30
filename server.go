@@ -3,6 +3,10 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/guravamey/gingonic/controller"
+	"github.com/guravamey/gingonic/middleware"
+	"io"
+	"net/http"
+	"os"
 )
 
 //Local host 5000, get,put, post and delete. ID as path param for put and delete.
@@ -11,14 +15,29 @@ import (
 func main() {
 
 	usercontroller := controller.New()
-	server := gin.Default()
+	setupLogOutput()
+	server := gin.New()
+	server.Use(gin.Recovery(), middleware.Logger(), middleware.BasicAuth())
+
 	userRoutes := server.Group("/users")
 	{
 		userRoutes.GET("/", func(ctx *gin.Context) { ctx.JSON(200, usercontroller.FindAll()) })
-		userRoutes.POST("/", func(ctx *gin.Context) { ctx.JSON(200, usercontroller.Save(ctx)) })
+		userRoutes.POST("/", func(ctx *gin.Context) {
+			save, err := usercontroller.Save(ctx)
+			if err != nil {
+				ctx.JSON(http.StatusBadRequest, gin.H{"error": "true", "message": err.Error()})
+			} else {
+				ctx.JSON(http.StatusOK, save)
+			}
+		})
 		userRoutes.PUT("/:id", func(ctx *gin.Context) {
 			id := ctx.Param("id")
-			ctx.JSON(200, usercontroller.Update(id, ctx))
+			save, err := usercontroller.Update(id, ctx)
+			if err != nil {
+				ctx.JSON(http.StatusBadRequest, gin.H{"error": "true", "message": err.Error()})
+			} else {
+				ctx.JSON(http.StatusOK, save)
+			}
 		})
 		userRoutes.DELETE("/:id", func(ctx *gin.Context) {
 			usercontroller.Delete(ctx.Param("id"))
@@ -27,4 +46,10 @@ func main() {
 	}
 	server.Run(":5000")
 
+}
+
+//Writes logs in gin.log file
+func setupLogOutput() {
+	f, _ := os.Create("gin.log")
+	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
 }
